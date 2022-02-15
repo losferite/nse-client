@@ -1,0 +1,32 @@
+<div class="space-y-4">
+  <p>
+    Выбранный стенд: {{ host }}
+  </p>
+
+  <app-filter (update)="updateSearch($event)"></app-filter>
+
+  <div
+    class="p-3 border rounded flex justify-between"
+    *ngFor="let branch of branches | async"
+  >
+    <div>
+      <div class="text-blue-900">{{branch.name}}</div>
+      <div class="text-xs">{{ branch.commit.author_name }}: {{ branch.commit.title }}</div>
+    </div>
+
+    <button
+      type="button"
+      class="py-1 px-6 bg-indigo-700 text-gray-50 rounded self-center"
+      *ngIf="!isBusy; else busyMsg"
+      (click)="deploy(branch.name)"
+    >
+      Deploy
+    </button>
+
+    <ng-template #busyMsg>
+      <div class="py-1 px-6 self-center text-red-500">
+        Deploying
+      </div>
+    </ng-template>
+  </div>
+</div>

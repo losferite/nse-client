@@ -1,0 +1,24 @@
+<div [formGroup]="form">
+  <div class="relative rounded shadow-sm">
+    <input
+      type="text"
+      name="term"
+      formControlName="term"
+      placeholder="Поиск ветки"
+      class="focus:ring-indigo-500 focus:border-indigo-500 block w-full p-3 pr-12 border-2 border-stone-900 rounded-md"
+    >
+
+    <div class="absolute inset-y-0 right-0 flex items-center">
+      <label for="host" class="sr-only">Currency</label>
+      <select
+        id="host"
+        name="host"
+        formControlName="host"
+        class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-3 mr-4 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+      >
+        <option [value]="''">Выберите стенд</option>
+        <option *ngFor="let host of hosts" [value]="host">{{ host }}</option>
+      </select>
+    </div>
+  </div>
+</div>

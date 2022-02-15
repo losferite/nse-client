@@ -3,7 +3,21 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // apiUrl: 'http://spawn.vs.dev.lan/',
+  apiUrl: '/api/',
+  hosts: [
+    'tartemeva',
+    'abataloff',
+    'apavlova',
+    'dmarkov',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+  ],
 };
 
 /*

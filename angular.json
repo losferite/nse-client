@@ -92,7 +92,8 @@
               "browserTarget": "spawn-branch:build:production"
             },
             "development": {
-              "browserTarget": "spawn-branch:build:development"
+              "browserTarget": "spawn-branch:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
