@@ -1,6 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, debounceTime, map, Observable, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  of,
+  shareReplay,
+  switchMap,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { IBranches } from '../types/branches';
 
@@ -10,8 +20,10 @@ import { IBranches } from '../types/branches';
 export class BranchesService {
   private term = new BehaviorSubject('');
   list = this.term.pipe(
+    distinctUntilChanged(),
     debounceTime(300),
     switchMap((term) => this.fetch(term)),
+    shareReplay(1),
   );
 
   constructor(

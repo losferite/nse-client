@@ -1,14 +1,14 @@
 <div class="space-y-4">
   <div
     class="p-3 border rounded flex justify-between"
-    *ngFor="let env of envs"
+    *ngFor="let env of envs | async"
   >
-    <div>
-      <div class="text-blue-900">{{ env }}</div>
+    <div class="self-center">
+      <div class="text-blue-900">{{ env.name }}</div>
     </div>
 
-    <div class="py-1 px-6 bg-indigo-700 text-gray-50 rounded self-center">
-      master
+    <div class="py-1 px-6 bg-indigo-700 text-gray-50 rounded self-center w-40 text-center">
+      {{ env.branch }}
     </div>
   </div>
 </div>

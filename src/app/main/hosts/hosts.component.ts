@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { EnvsService } from '../envs.service';
 
 @Component({
   selector: 'app-hosts',
@@ -7,9 +7,9 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./hosts.component.css']
 })
 export class HostsComponent implements OnInit {
-  envs = environment.hosts;
+  envs = this.envsService.list;
 
-  constructor() { }
+  constructor(private envsService: EnvsService) { }
 
   ngOnInit(): void {
   }
