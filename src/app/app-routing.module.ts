@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BranchesComponent } from './main/branches/branches.component';
-import { HostsComponent } from './main/hosts/hosts.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'hosts', pathMatch: 'full' },
-  { path: 'hosts', component: HostsComponent },
-  { path: 'branches', component: BranchesComponent },
+  { path: 'hosts', loadChildren: () => import('./hosts/hosts.module').then(m => m.HostsModule) },
+  { path: 'branches', loadChildren: () => import('./branches/branches.module').then(m => m.BranchesModule) },
 ];
 
 @NgModule({

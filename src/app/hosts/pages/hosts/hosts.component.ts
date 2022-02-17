@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EnvsService } from '../envs.service';
+import { EnvsService } from '../../../main/envs.service';
 
 @Component({
   selector: 'app-hosts',

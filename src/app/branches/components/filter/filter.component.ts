@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
-import { EnvsService } from '../../envs.service';
+import { EnvsService } from '../../../main/envs.service';
 
 @Component({
   selector: 'app-filter',

@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Observable, Subject, take, takeUntil } from 'rxjs';
-import { IBranches } from '../../types/branches';
-import { BranchesService } from '../branches.service';
-import { StatusService } from '../status.service';
+import { IBranches } from '../../../types/branches';
+import { BranchesService } from '../../../main/branches.service';
+import { ModalService } from '../../../main/modal/modal.service';
+import { StatusService } from '../../../main/status.service';
 
 @Component({
   selector: 'app-branches',
@@ -18,6 +19,7 @@ export class BranchesComponent implements OnInit, OnDestroy {
   constructor(
     private branchService: BranchesService,
     private statusService: StatusService,
+    private modalService: ModalService,
   ) {
   }
 
@@ -41,10 +43,10 @@ export class BranchesComponent implements OnInit, OnDestroy {
 
   deploy(name: string) {
     if (this.host) {
+      this.isBusy = true;
       this.branchService.deploy(name, this.host).pipe(
         take(1),
-      ).subscribe(res => console.log(res));
-      this.statusService.tick();
+      ).subscribe(res => this.modalService.open(res.data));
     } else {
       alert('Выбери стенд');
     }
