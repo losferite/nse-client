@@ -46,9 +46,12 @@ export class BranchesComponent implements OnInit, OnDestroy {
       this.isBusy = true;
       this.branchService.deploy(name, this.host).pipe(
         take(1),
-      ).subscribe(res => this.modalService.open(res.data));
+      ).subscribe(() => {
+        this.statusService.tick();
+        this.modalService.open(`Разливаем ветку ${ name } на стенд ${ this.host }`);
+      });
     } else {
-      alert('Выбери стенд');
+      this.modalService.open( `Выбери стенд`);
     }
   }
 }
