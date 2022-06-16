@@ -28,7 +28,6 @@ export class BranchesComponent implements OnInit, OnDestroy {
       map(i => i.isBranchDeploying),
       takeUntil(this.destroy),
     ).subscribe(res => this.isBusy = res);
-    this.statusService.tick();
   }
 
   ngOnDestroy(): void {

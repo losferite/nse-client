@@ -1,18 +1,18 @@
 <div
   class="flex items-center gap-x-6"
-  *ngIf="lastDeploy$ | async as lastDeploy"
+  *ngIf="statusData"
 >
   <p>
     <span class="text-gray-400">Last deployed branch: </span>
-    <span class="text-green-600">{{ lastDeploy.branch || '–' }}</span>
+    <span class="text-green-600">{{ statusData?.lastDeploy?.branch || '–' }}</span>
   </p>
   <p>
     <span class="text-gray-400">Deployed on: </span>
-    <span class="text-green-600">{{ lastDeploy.envName || '–' }}</span>
+    <span class="text-green-600">{{ statusData?.lastDeploy?.envName || '–' }}</span>
   </p>
   <div
     class="text-red-800"
-    *ngIf="isDeploying$ | async; else msg"
+    *ngIf="statusData.isBranchDeploying; else msg"
   >
     Deploying branch
   </div>
@@ -20,8 +20,8 @@
   <ng-template #msg>
     <button
       class="pointer-events-auto text-blue-400"
-      (click)="showLastResult(lastDeploy.result)"
-      *ngIf="lastDeploy.result"
+      (click)="showLastResult(statusData?.lastDeploy?.result)"
+      *ngIf="statusData?.lastDeploy?.result"
     >
       Show result
     </button>

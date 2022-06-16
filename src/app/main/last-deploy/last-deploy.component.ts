@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { map } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { IStatus } from '../../types/status';
 import { ModalService } from '../modal/modal.service';
 import { StatusService } from '../status.service';
 
@@ -8,13 +9,9 @@ import { StatusService } from '../status.service';
   templateUrl: './last-deploy.component.html',
   styleUrls: [ './last-deploy.component.css' ],
 })
-export class LastDeployComponent {
-  lastDeploy$ = this.status.status.pipe(
-    map(i => i.lastDeploy),
-  );
-  isDeploying$ = this.status.status.pipe(
-    map(i => i.isBranchDeploying)
-  );
+export class LastDeployComponent implements OnInit, OnDestroy {
+  private destroy = new Subject();
+  statusData?: IStatus;
 
   constructor(
     private status: StatusService,
@@ -22,14 +19,29 @@ export class LastDeployComponent {
   ) {
   }
 
-  showLastResult(data: { error: string, message: string }): void {
+  ngOnInit(): void {
+    this.status.status.pipe(
+      takeUntil(this.destroy),
+    ).subscribe(res => this.statusData = res);
+    this.status.tick()
+  }
+
+  ngOnDestroy(): void {
+    this.destroy.next('');
+    this.destroy.complete();
+  }
+
+  showLastResult(data: { error: string, message: string } | undefined): void {
+    if (!data) {
+      return;
+    }
     const title = data.error
       ? '<p class="font-medium text-red-500 mb-3">Произошла ошибка</p>'
       : '<p class="font-medium text-blue-600 mb-3">Вывод команды</p>';
 
     this.modalService.open(`${ title }
-      ${ data.message }
-      ${ data.error }
+      ${ data.message || '' }
+      ${ data.error || '' }
     `);
   }
 }
